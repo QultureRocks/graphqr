@@ -62,10 +62,6 @@
   <ul class="link-list">
   
   
-    <li><span class="include">Pundit</span>
-  
-  
-  
     <li><a class="include" href="ApplyScopes.html">GraphQR::ApplyScopes</a>
   
   
@@ -87,8 +83,6 @@
     
     <li ><a href="#method-i-policy_provider">#policy_provider</a>
     
-    <li ><a href="#method-i-pundit_user">#pundit_user</a>
-    
   </ul>
 </div>
 
@@ -102,7 +96,7 @@
 
   <section class="description">
     
-<p>The <a href="Base.html"><code>Base</code></a> module defines some helper methods that can be used once it is included it also includes the basic libraries (Pundit and <a href="ApplyScopes.html"><code>ApplyScopes</code></a>)</p>
+<p>The <a href="Base.html"><code>Base</code></a> module defines some helper methods that can be used once it is included it also includes the basic <a href="ApplyScopes.html"><code>ApplyScopes</code></a> library</p>
 
   </section>
 
@@ -140,14 +134,14 @@
 
 <h3 id="method-i-authorize_graphql-label-Example-3A">Example:<span><a href="#method-i-authorize_graphql-label-Example-3A">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
-<pre class="ruby"><span class="ruby-identifier">authorize_graphql</span> <span class="ruby-constant">Contract</span>, <span class="ruby-value">:index?</span>
+<pre class="ruby"><span class="ruby-identifier">authorize_graphql</span> <span class="ruby-constant">User</span>, <span class="ruby-value">:index?</span>
 </pre>
           
           
 
           
           <div class="method-source-code" id="authorize_graphql-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/base.rb, line 20</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/base.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">authorize_graphql</span>(<span class="ruby-identifier">record</span>, <span class="ruby-identifier">action</span>, <span class="ruby-value">policy_class:</span> <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">args</span> = { <span class="ruby-value">record:</span> <span class="ruby-identifier">record</span>, <span class="ruby-value">action:</span> <span class="ruby-identifier">action</span>, <span class="ruby-value">policy_class:</span> <span class="ruby-identifier">policy_class</span> }
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">GraphQL</span><span class="ruby-operator">::</span><span class="ruby-constant">ExecutionError</span>, <span class="ruby-string">&#39;You are not authorized to perform this action&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">policy_provider</span>.<span class="ruby-identifier">allowed?</span>(<span class="ruby-identifier">args</span>)
@@ -181,7 +175,7 @@
 
           
           <div class="method-source-code" id="current_company-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/base.rb, line 27</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/base.rb, line 26</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">current_company</span>
   <span class="ruby-identifier">context</span>[<span class="ruby-value">:current_company</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -214,7 +208,7 @@
 
           
           <div class="method-source-code" id="current_contract-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/base.rb, line 33</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/base.rb, line 32</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">current_contract</span>
   <span class="ruby-identifier">context</span>[<span class="ruby-value">:current_contract</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -247,42 +241,9 @@
 
           
           <div class="method-source-code" id="policy_provider-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/base.rb, line 46</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/base.rb, line 38</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">policy_provider</span>
   <span class="ruby-identifier">context</span>[<span class="ruby-value">:policy_provider</span>]
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-pundit_user" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">pundit_user</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>This is a helper method to get the pundit user from the context The pundit user is needed for Pundit usage</p>
-          
-          
-
-          
-          <div class="method-source-code" id="pundit_user-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/base.rb, line 40</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">pundit_user</span>
-  <span class="ruby-identifier">context</span>[<span class="ruby-value">:policy_context</span>]
 <span class="ruby-keyword">end</span></pre>
           </div>
           
