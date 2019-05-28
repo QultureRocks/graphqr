@@ -79,6 +79,8 @@
 
   <section class="description">
     
+<p>TODO: add documentation</p>
+
   </section>
 
   
@@ -117,7 +119,7 @@
 
           
           <div class="method-source-code" id="pagination_type-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/pagination.rb, line 5</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/pagination.rb, line 7</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">pagination_type</span>
   <span class="ruby-ivar">@pagination_type</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">begin</span>
     <span class="ruby-identifier">conn_name</span> = <span class="ruby-node">&quot;#{graphql_name}Pagination&quot;</span>
@@ -127,7 +129,8 @@
       <span class="ruby-identifier">graphql_name</span>(<span class="ruby-identifier">conn_name</span>)
       <span class="ruby-identifier">edge_type</span>(<span class="ruby-identifier">edge_type_class</span>)
 
-      <span class="ruby-identifier">field</span> <span class="ruby-value">:page_info</span>, <span class="ruby-constant">Pagination</span><span class="ruby-operator">::</span><span class="ruby-constant">Types</span><span class="ruby-operator">::</span><span class="ruby-constant">PaginationPageInfoType</span>, <span class="ruby-value">null:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">description:</span> <span class="ruby-string">&#39;Information to aid in pagination.&#39;</span>
+      <span class="ruby-identifier">field</span> <span class="ruby-value">:page_info</span>, <span class="ruby-constant">Pagination</span><span class="ruby-operator">::</span><span class="ruby-constant">Types</span><span class="ruby-operator">::</span><span class="ruby-constant">PaginationPageInfoType</span>, <span class="ruby-value">null:</span> <span class="ruby-keyword">false</span>,
+                                                                   <span class="ruby-value">description:</span> <span class="ruby-string">&#39;Information to aid in pagination.&#39;</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>

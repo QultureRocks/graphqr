@@ -90,6 +90,8 @@
 
   <section class="description">
     
+<p>TODO: add documentation</p>
+
   </section>
 
   
@@ -128,7 +130,7 @@
 
           
           <div class="method-source-code" id="after_resolve-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/pagination/pagination_extension.rb, line 21</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/pagination/pagination_extension.rb, line 23</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">after_resolve</span>(<span class="ruby-value">value:</span>, <span class="ruby-value">arguments:</span>, <span class="ruby-operator">**</span><span class="ruby-identifier">_kwargs</span>)
   <span class="ruby-constant">PaginationResolver</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">value</span>, <span class="ruby-value">items:</span> <span class="ruby-identifier">arguments</span>[<span class="ruby-value">:per</span>], <span class="ruby-value">page:</span> <span class="ruby-identifier">arguments</span>[<span class="ruby-value">:page</span>])
 <span class="ruby-keyword">end</span></pre>
@@ -161,7 +163,7 @@
 
           
           <div class="method-source-code" id="apply-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/pagination/pagination_extension.rb, line 6</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/pagination/pagination_extension.rb, line 8</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">apply</span>
   <span class="ruby-identifier">field</span>.<span class="ruby-identifier">argument</span> <span class="ruby-value">:per</span>, <span class="ruby-string">&#39;Int&#39;</span>, <span class="ruby-value">required:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">default_value:</span> <span class="ruby-value">25</span>,
                               <span class="ruby-value">description:</span> <span class="ruby-string">&#39;The requested number of nodes for the page&#39;</span>
@@ -197,7 +199,7 @@
 
           
           <div class="method-source-code" id="resolve-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/pagination/pagination_extension.rb, line 14</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/pagination/pagination_extension.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">resolve</span>(<span class="ruby-value">object:</span>, <span class="ruby-value">arguments:</span>, <span class="ruby-operator">**</span><span class="ruby-identifier">_kwargs</span>)
   <span class="ruby-identifier">next_args</span> = <span class="ruby-identifier">arguments</span>.<span class="ruby-identifier">dup</span>
   <span class="ruby-identifier">next_args</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:per</span>)

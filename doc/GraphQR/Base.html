@@ -77,10 +77,6 @@
     
     <li ><a href="#method-i-authorize_graphql">#authorize_graphql</a>
     
-    <li ><a href="#method-i-current_company">#current_company</a>
-    
-    <li ><a href="#method-i-current_contract">#current_contract</a>
-    
     <li ><a href="#method-i-policy_provider">#policy_provider</a>
     
   </ul>
@@ -106,6 +102,20 @@
 
     
 
+    
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
+      <dl>
+      
+        <dt id="DEFAULT_AUTHORIZATION_ERROR">DEFAULT_AUTHORIZATION_ERROR
+        
+        <dd>
+        
+      
+      </dl>
+    </section>
     
 
     
@@ -141,76 +151,10 @@
 
           
           <div class="method-source-code" id="authorize_graphql-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/base.rb, line 19</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/base.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">authorize_graphql</span>(<span class="ruby-identifier">record</span>, <span class="ruby-identifier">action</span>, <span class="ruby-value">policy_class:</span> <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">args</span> = { <span class="ruby-value">record:</span> <span class="ruby-identifier">record</span>, <span class="ruby-value">action:</span> <span class="ruby-identifier">action</span>, <span class="ruby-value">policy_class:</span> <span class="ruby-identifier">policy_class</span> }
-  <span class="ruby-identifier">raise</span> <span class="ruby-constant">GraphQL</span><span class="ruby-operator">::</span><span class="ruby-constant">ExecutionError</span>, <span class="ruby-string">&#39;You are not authorized to perform this action&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">policy_provider</span>.<span class="ruby-identifier">allowed?</span>(<span class="ruby-identifier">args</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-current_company" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">current_company</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>This is a helper method to get the current company from the context</p>
-          
-          
-
-          
-          <div class="method-source-code" id="current_company-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/base.rb, line 26</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">current_company</span>
-  <span class="ruby-identifier">context</span>[<span class="ruby-value">:current_company</span>]
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-current_contract" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">current_contract</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>This is a helper method to get the current contract from the context</p>
-          
-          
-
-          
-          <div class="method-source-code" id="current_contract-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/base.rb, line 32</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">current_contract</span>
-  <span class="ruby-identifier">context</span>[<span class="ruby-value">:current_contract</span>]
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">GraphQL</span><span class="ruby-operator">::</span><span class="ruby-constant">ExecutionError</span>, <span class="ruby-constant">DEFAULT_AUTHORIZATION_ERROR</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">policy_provider</span>.<span class="ruby-identifier">allowed?</span>(<span class="ruby-identifier">args</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -241,7 +185,7 @@
 
           
           <div class="method-source-code" id="policy_provider-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/base.rb, line 38</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/base.rb, line 28</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">policy_provider</span>
   <span class="ruby-identifier">context</span>[<span class="ruby-value">:policy_provider</span>]
 <span class="ruby-keyword">end</span></pre>
