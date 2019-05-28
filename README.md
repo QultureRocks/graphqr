@@ -20,6 +20,8 @@ Or install it yourself as:
 
     $ gem install graphqr
 
+If you'd like to use the pagination feature, you must have `pagy` installed.
+
 ## Usage
 
 TODO: Write usage instructions here

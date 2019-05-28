@@ -5,6 +5,8 @@ module GraphQR
     ##
     # TODO: add documentation
     class PaginationExtension < GraphQL::Schema::FieldExtension
+      DEFAULT_PAGINATION_ERROR = 'No paginator defined'
+
       def apply
         field.argument :per, 'Int', required: false, default_value: 25,
                                     description: 'The requested number of nodes for the page'
@@ -21,7 +23,9 @@ module GraphQR
       end
 
       def after_resolve(value:, arguments:, **_kwargs)
-        PaginationResolver.new(value, items: arguments[:per], page: arguments[:page])
+        raise GraphQL::ExecutionError, DEFAULT_PAGINATION_ERROR unless GraphQR.paginator.present?
+
+        Resolvers::PagyResolver.new(value, items: arguments[:per], page: arguments[:page]) if GraphQR.use_pagy?
       end
     end
   end
