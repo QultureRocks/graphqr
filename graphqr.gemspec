@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir['spec/**/*']
 
   s.add_runtime_dependency 'graphql', ['>= 1.9.0', '< 2']
+  s.add_runtime_dependency 'pagy', ['>= 3', '< 4']
 
   s.add_development_dependency 'bundler', '~> 1.16'
   s.add_development_dependency 'rake', '~> 10.0'

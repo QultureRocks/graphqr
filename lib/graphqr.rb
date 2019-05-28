@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'graphql'
+require 'pagy'
+
 ##
 # This module represents all the extensions we made to the graphql-ruby library
 # it contains helpers and integrations we need to keep our workflow as simple as possible.
