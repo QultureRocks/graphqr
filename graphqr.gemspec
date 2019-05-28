@@ -4,28 +4,25 @@ lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'graphqr/version'
 
-Gem::Specification.new do |spec|
-  spec.name          = 'graphqr'
-  spec.version       = GraphQR::VERSION
-  spec.authors       = ['Manuel Puyol', 'Eric La Rosa', 'João Batista Marinho']
-  spec.email         = ['manuelpuyol@gmail.com', 'eric@rosa.la', 'joao@qulture.rocks']
+Gem::Specification.new do |s|
+  s.name          = 'graphqr'
+  s.version       = GraphQR::VERSION
+  s.authors       = ['Manuel Puyol', 'Eric La Rosa', 'João Batista Marinho']
+  s.email         = ['manuelpuyol@gmail.com', 'eric@rosa.la', 'joao@qulture.rocks']
 
-  spec.summary       = 'Extensions and helpers for graphql-ruby'
-  spec.description   = 'Extensions and helpers for graphql-ruby'
-  spec.homepage      = 'https://github.com/QultureRocks/graphqr'
-  spec.license       = 'MIT'
+  s.summary       = 'Extensions and helpers for graphql-ruby'
+  s.description   = 'Extensions and helpers for graphql-ruby'
+  s.homepage      = 'https://github.com/QultureRocks/graphqr'
+  s.license       = 'MIT'
 
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(test|spec|features)/})
-  end
-  spec.bindir        = 'exe'
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = ['lib']
+  s.files = Dir['{lib}/**/*', 'LICENSE.txt', 'README.md']
+  s.test_files = Dir['spec/**/*']
 
-  spec.add_development_dependency 'bundler', '~> 1.16'
-  spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rubocop'
-  spec.add_development_dependency 'rubocop-performance'
-  spec.add_development_dependency 'rubocop-thread_safety'
+  s.add_development_dependency 'bundler', '~> 1.16'
+  s.add_development_dependency 'rake', '~> 10.0'
+  s.add_development_dependency 'rdoc'
+  s.add_development_dependency 'rspec', '~> 3.0'
+  s.add_development_dependency 'rubocop'
+  s.add_development_dependency 'rubocop-performance'
+  s.add_development_dependency 'rubocop-thread_safety'
 end
