@@ -2,6 +2,8 @@
 
 module GraphQR
   module Pagination
+    ##
+    # TODO: add documentation
     class PaginationResolver
       include Pagy::Backend
 

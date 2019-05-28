@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module GraphQR
+  ##
+  # TODO: add documentation
   module ScopeItems
     def scope_items(items, context)
       if scopable_items?(items)

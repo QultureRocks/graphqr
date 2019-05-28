@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module GraphQR
+  ##
+  # TODO: add documentation
   module Pagination
     def pagination_type
       @pagination_type ||= begin
@@ -11,7 +13,8 @@ module GraphQR
           graphql_name(conn_name)
           edge_type(edge_type_class)
 
-          field :page_info, Pagination::Types::PaginationPageInfoType, null: false, description: 'Information to aid in pagination.'
+          field :page_info, Pagination::Types::PaginationPageInfoType, null: false,
+                                                                       description: 'Information to aid in pagination.'
         end
       end
     end

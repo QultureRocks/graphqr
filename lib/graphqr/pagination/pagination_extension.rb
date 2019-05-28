@@ -2,6 +2,8 @@
 
 module GraphQR
   module Pagination
+    ##
+    # TODO: add documentation
     class PaginationExtension < GraphQL::Schema::FieldExtension
       def apply
         field.argument :per, 'Int', required: false, default_value: 25,

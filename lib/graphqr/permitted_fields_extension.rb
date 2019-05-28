@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module GraphQR
+  ##
+  # TODO: add documentation
   class PermittedFieldsExtension < GraphQL::Schema::FieldExtension
     def resolve(object:, arguments:, context:)
       if authorized?(object, context)

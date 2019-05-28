@@ -3,6 +3,8 @@
 # rubocop:disable Metrics/ParameterLists
 
 module GraphQR
+  ##
+  # TODO: add documentation
   module QueryField
     def query_field(field_name, active_record_class, type_class:, scope_class: nil, **kwargs, &block)
       is_collection = active_record_class.is_a? Array
