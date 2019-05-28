@@ -58,7 +58,19 @@
     
     
     
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
     
+    <li ><a href="#method-c-enabled-3D">::enabled=</a>
+    
+    <li ><a href="#method-c-enabled-3F">::enabled?</a>
+    
+  </ul>
+</div>
+
   </div>
 </nav>
 
@@ -100,6 +112,80 @@
     
 
     
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-enabled-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">enabled=</span><span
+            class="method-args">(value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Switches <a href="GraphQR.html"><code>GraphQR</code></a> on or off</p>
+          
+          
+
+          
+          <div class="method-source-code" id="enabled-3D-source">
+            <pre><span class="ruby-comment"># File lib/graphqr.rb, line 11</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">enabled=</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-constant">GraphQR</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">enabled</span> = <span class="ruby-identifier">value</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-enabled-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">enabled?</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Returns if <a href="GraphQR.html"><code>GraphQR</code></a> is turned on</p>
+          
+          
+
+          
+          <div class="method-source-code" id="enabled-3F-source">
+            <pre><span class="ruby-comment"># File lib/graphqr.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">enabled?</span>
+  <span class="ruby-constant">GraphQR</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">enabled</span>.<span class="ruby-identifier">present?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
   </section>
 </main>
 
