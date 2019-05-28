@@ -19,7 +19,7 @@ module GraphQR
     # ### Example:
     #
     # ```
-    # apply_scopes(Contract, { with_id: [1,2,3], order_by_name: true} )
+    # apply_scopes(User, { with_id: [1,2,3], order_by_name: true} )
     # ```
     def apply_scopes(target, scopes)
       parsed_scopes = parse_scopes(scopes.to_h)
