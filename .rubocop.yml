@@ -1,0 +1,6 @@
+require:
+  - rubocop-thread_safety
+  - rubocop-performance
+
+Metrics/LineLength:
+  Max: 120
