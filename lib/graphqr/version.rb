@@ -1,0 +1,3 @@
+module Graphqr
+  VERSION = "0.1.0"
+end
