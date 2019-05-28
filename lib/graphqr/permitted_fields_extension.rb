@@ -3,8 +3,7 @@
 module GraphQR
   class PermittedFieldsExtension < GraphQL::Schema::FieldExtension
     def resolve(object:, arguments:, context:)
-      authorized = authorized?(object, context)
-      if authorized
+      if authorized?(object, context)
         yield(object, arguments, nil)
       else
         on_unauthorized
