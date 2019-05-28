@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe Graphqr do
+RSpec.describe GraphQR do
   it 'has a version number' do
-    expect(Graphqr::VERSION).not_to be nil
+    expect(GraphQR::VERSION).not_to be nil
   end
 
   it 'does something useful' do

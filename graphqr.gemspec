@@ -6,7 +6,7 @@ require 'graphqr/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'graphqr'
-  spec.version       = Graphqr::VERSION
+  spec.version       = GraphQR::VERSION
   spec.authors       = ['Manuel Puyol', 'Eric La Rosa', 'João Batista Marinho']
   spec.email         = ['manuelpuyol@gmail.com', 'eric@rosa.la', 'joao@qulture.rocks']
 

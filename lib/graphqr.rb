@@ -4,6 +4,6 @@ require 'graphqr/version'
 
 ##
 # TODO: Add documentation
-module Graphqr
+module GraphQR
   # Your code goes here...
 end
