@@ -11,8 +11,16 @@ module GraphQR
       GraphQR.config.paginator
     end
 
+    def policy_provider
+      GraphQR.config.policy_provider
+    end
+
     def use_pagy?
       paginator == :pagy
+    end
+
+    def use_pundit?
+      policy_provider == :pundit
     end
   end
 end
