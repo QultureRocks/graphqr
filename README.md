@@ -27,6 +27,7 @@ If you'd like to use the pagination feature, you must have `pagy` installed.
 
 ## Usage
 
+[Documentation](https://qulturerocks.github.io/graphqr/)
 TODO: Write usage instructions here
 
 ## Development
