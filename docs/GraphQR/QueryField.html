@@ -79,7 +79,9 @@
 
   <section class="description">
     
-<p>TODO: add documentation</p>
+<p>This extension adds the <code>query_field</code> method. A helper to create simple queries faster and easier</p>
+
+<p>To use this extension, add <code>extend Graphql::QueryField</code> on your <code>QueryType</code></p>
 
   </section>
 
@@ -113,13 +115,37 @@
 
         <div class="method-description">
           
-          
+          <p>The <code>query_field</code> method is a helper to create fields and resolver without effort.</p>
+
+<h3 id="method-i-query_field-label-Arguments">Arguments<span><a href="#method-i-query_field-label-Arguments">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p><code>field_name</code> <em>(required)</em>: the GraphQL query name</p>
+
+<p><code>active_record_class</code> <em>(required)</em>: the model ActiveRecord class. It can be represented as an array if you want it to return a collection</p>
+
+<p><code>type_class</code> <em>(required)</em>: The GraphQL type class</p>
+
+<p><code>scope_class</code>: A specific InputType that contains the possible scopes that can be applied to your collection. Similar to the <a href="https://github.com/plataformatec/has_scope/">has_scope</a> gem. <em>This argument is required for collection fields.</em></p>
+
+<h3 id="method-i-query_field-label-Examples">Examples<span><a href="#method-i-query_field-label-Examples">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<pre class="ruby"><span class="ruby-identifier">query_type</span> <span class="ruby-value">:user</span>, <span class="ruby-constant">User</span>, <span class="ruby-value">type_class:</span> <span class="ruby-constant">UserType</span>
+<span class="ruby-identifier">query_type</span> <span class="ruby-value">:users</span>, [<span class="ruby-constant">User</span>], <span class="ruby-value">type_class:</span> <span class="ruby-constant">UserType</span>, <span class="ruby-value">scope_class:</span> <span class="ruby-constant">UserScopeInput</span>
+</pre>
+
+<h3 id="method-i-query_field-label-Collention+fields">Collention fields<span><a href="#method-i-query_field-label-Collention+fields">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>Collection fields are always paginated using the configured <code>paginator</code> Its resolver will look for the <code>index?</code> method on the model Policy. It&#39;ll have the optional <code>filter</code> argument with <code>scope_class</code> type</p>
+
+<h3 id="method-i-query_field-label-Single+fields">Single fields<span><a href="#method-i-query_field-label-Single+fields">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>Single fields have the required <code>id</code> argument to find the exact record searched. Its resolver will look for the <code>show?</code> method on the model Policy.</p>
           
           
 
           
           <div class="method-source-code" id="query_field-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/query_field.rb, line 9</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/query_field.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">query_field</span>(<span class="ruby-identifier">field_name</span>, <span class="ruby-identifier">active_record_class</span>, <span class="ruby-value">type_class:</span>, <span class="ruby-value">scope_class:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-operator">**</span><span class="ruby-identifier">kwargs</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-identifier">is_collection</span> = <span class="ruby-identifier">active_record_class</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Array</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_collection</span>

@@ -5,7 +5,17 @@ require 'pundit'
 module GraphQR
   module Policies
     ##
-    # TODO: add documentation
+    # This is a wrapper around Pundit provided to keep all PolicyProviders with the same methods.
+    #
+    # If you want to use the Pundit integration with our extensions you should pass:
+    #
+    # ```
+    # {
+    #   policy_provider: GraphQR::Policies::PunditProvider.new(policy_context: pundit_user)
+    # }
+    # ```
+    #
+    # To the Schema context.
     class PunditProvider
       attr_reader :policy_context
 

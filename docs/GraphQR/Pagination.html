@@ -79,7 +79,11 @@
 
   <section class="description">
     
-<p>TODO: add documentation</p>
+<p>This module adds the GraphQL pagination types.</p>
+
+<p>When a field is paginated, the field <code>page_info</code> is always included with some pagination information.</p>
+
+<p>To use this module use <code>extend GraphQR::Pagination</code> on the objects you want it (or in your <code>BaseObject</code>)</p>
 
   </section>
 
@@ -119,7 +123,7 @@
 
           
           <div class="method-source-code" id="pagination_type-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/pagination.rb, line 7</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/pagination.rb, line 11</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">pagination_type</span>
   <span class="ruby-ivar">@pagination_type</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">begin</span>
     <span class="ruby-identifier">conn_name</span> = <span class="ruby-node">&quot;#{graphql_name}Pagination&quot;</span>

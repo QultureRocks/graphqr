@@ -75,6 +75,8 @@
     
     <li ><a href="#method-i-apply">#apply</a>
     
+    <li ><a href="#method-i-call_resolver">#call_resolver</a>
+    
     <li ><a href="#method-i-resolve">#resolve</a>
     
   </ul>
@@ -90,7 +92,9 @@
 
   <section class="description">
     
-<p>TODO: add documentation</p>
+<p>The <a href="PaginationExtension.html"><code>PaginationExtension</code></a> is used on the <code>GraphQR::Fields::BaseField</code>.</p>
+
+<p>It adds the <code>per</code> and <code>page</code> arguments to the paginated field and uses the selected paginator resolver to add <code>nodes</code>, <code>edges</code> and <code>page_info</code> on the response</p>
 
   </section>
 
@@ -107,7 +111,12 @@
       </header>
       <dl>
       
-        <dt id="DEFAULT_PAGINATION_ERROR">DEFAULT_PAGINATION_ERROR
+        <dt id="INVALID_PAGINATOR_ERROR">INVALID_PAGINATOR_ERROR
+        
+        <dd>
+        
+      
+        <dt id="NO_PAGINATOR_ERROR">NO_PAGINATOR_ERROR
         
         <dd>
         
@@ -144,11 +153,11 @@
 
           
           <div class="method-source-code" id="after_resolve-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/pagination/pagination_extension.rb, line 25</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/pagination/pagination_extension.rb, line 29</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">after_resolve</span>(<span class="ruby-value">value:</span>, <span class="ruby-value">arguments:</span>, <span class="ruby-operator">**</span><span class="ruby-identifier">_kwargs</span>)
-  <span class="ruby-identifier">raise</span> <span class="ruby-constant">GraphQL</span><span class="ruby-operator">::</span><span class="ruby-constant">ExecutionError</span>, <span class="ruby-constant">DEFAULT_PAGINATION_ERROR</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">GraphQR</span>.<span class="ruby-identifier">paginator</span>.<span class="ruby-identifier">present?</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">GraphQL</span><span class="ruby-operator">::</span><span class="ruby-constant">ExecutionError</span>, <span class="ruby-constant">NO_PAGINATOR_ERROR</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">GraphQR</span>.<span class="ruby-identifier">paginator</span>.<span class="ruby-identifier">present?</span>
 
-  <span class="ruby-constant">Resolvers</span><span class="ruby-operator">::</span><span class="ruby-constant">PagyResolver</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">value</span>, <span class="ruby-value">items:</span> <span class="ruby-identifier">arguments</span>[<span class="ruby-value">:per</span>], <span class="ruby-value">page:</span> <span class="ruby-identifier">arguments</span>[<span class="ruby-value">:page</span>]) <span class="ruby-keyword">if</span> <span class="ruby-constant">GraphQR</span>.<span class="ruby-identifier">use_pagy?</span>
+  <span class="ruby-identifier">call_resolver</span>(<span class="ruby-identifier">value</span>, <span class="ruby-identifier">arguments</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -179,12 +188,50 @@
 
           
           <div class="method-source-code" id="apply-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/pagination/pagination_extension.rb, line 10</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/pagination/pagination_extension.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">apply</span>
   <span class="ruby-identifier">field</span>.<span class="ruby-identifier">argument</span> <span class="ruby-value">:per</span>, <span class="ruby-string">&#39;Int&#39;</span>, <span class="ruby-value">required:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">default_value:</span> <span class="ruby-value">25</span>,
                               <span class="ruby-value">description:</span> <span class="ruby-string">&#39;The requested number of nodes for the page&#39;</span>
   <span class="ruby-identifier">field</span>.<span class="ruby-identifier">argument</span> <span class="ruby-value">:page</span>, <span class="ruby-string">&#39;Int&#39;</span>, <span class="ruby-value">required:</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">default_value:</span> <span class="ruby-value">1</span>,
                                <span class="ruby-value">description:</span> <span class="ruby-string">&#39;The requested page number&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-call_resolver" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">call_resolver</span><span
+            class="method-args">(value, arguments)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="call_resolver-source">
+            <pre><span class="ruby-comment"># File lib/graphqr/pagination/pagination_extension.rb, line 35</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">call_resolver</span>(<span class="ruby-identifier">value</span>, <span class="ruby-identifier">arguments</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-constant">GraphQR</span>.<span class="ruby-identifier">paginator</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:pagy</span>
+    <span class="ruby-constant">Resolvers</span><span class="ruby-operator">::</span><span class="ruby-constant">PagyResolver</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">value</span>, <span class="ruby-value">items:</span> <span class="ruby-identifier">arguments</span>[<span class="ruby-value">:per</span>], <span class="ruby-value">page:</span> <span class="ruby-identifier">arguments</span>[<span class="ruby-value">:page</span>])
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">GraphQL</span><span class="ruby-operator">::</span><span class="ruby-constant">ExecutionError</span>, <span class="ruby-constant">INVALID_PAGINATOR_ERROR</span>
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -215,7 +262,7 @@
 
           
           <div class="method-source-code" id="resolve-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/pagination/pagination_extension.rb, line 18</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/pagination/pagination_extension.rb, line 22</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">resolve</span>(<span class="ruby-value">object:</span>, <span class="ruby-value">arguments:</span>, <span class="ruby-operator">**</span><span class="ruby-identifier">_kwargs</span>)
   <span class="ruby-identifier">next_args</span> = <span class="ruby-identifier">arguments</span>.<span class="ruby-identifier">dup</span>
   <span class="ruby-identifier">next_args</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:per</span>)

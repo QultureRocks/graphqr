@@ -4,7 +4,7 @@ module GraphQR
   module Pagination
     module Resolvers
       ##
-      # TODO: add documentation
+      # This is a resolver that uses `Pagy::Backend` and maps it to the GraphQL pagination structure.
       class PagyResolver
         include Pagy::Backend
 

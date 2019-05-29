@@ -92,7 +92,16 @@
 
   <section class="description">
     
-<p>TODO: add documentation</p>
+<p>This is a wrapper around Pundit provided to keep all PolicyProviders with the same methods.</p>
+
+<p>If you want to use the Pundit integration with our extensions you should pass:</p>
+
+<pre class="ruby">{
+  <span class="ruby-value">policy_provider:</span> <span class="ruby-constant">GraphQR</span><span class="ruby-operator">::</span><span class="ruby-constant">Policies</span><span class="ruby-operator">::</span><span class="ruby-constant">PunditProvider</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">policy_context:</span> <span class="ruby-identifier">pundit_user</span>)
+}
+</pre>
+
+<p>To the Schema context.</p>
 
   </section>
 
@@ -153,7 +162,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/policies/pundit_provider.rb, line 12</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/policies/pundit_provider.rb, line 22</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-value">policy_context:</span>)
   <span class="ruby-ivar">@policy_context</span> = <span class="ruby-identifier">policy_context</span>
 <span class="ruby-keyword">end</span></pre>
@@ -194,7 +203,7 @@
 
           
           <div class="method-source-code" id="allowed-3F-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/policies/pundit_provider.rb, line 16</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/policies/pundit_provider.rb, line 26</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">allowed?</span>(<span class="ruby-value">action:</span>, <span class="ruby-value">record:</span>, <span class="ruby-value">policy_class:</span> <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">policy</span> = <span class="ruby-identifier">policy_for</span>(<span class="ruby-value">record:</span> <span class="ruby-identifier">record</span>, <span class="ruby-value">policy_class:</span> <span class="ruby-identifier">policy_class</span>)
 
@@ -229,7 +238,7 @@
 
           
           <div class="method-source-code" id="authorized_records-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/policies/pundit_provider.rb, line 22</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/policies/pundit_provider.rb, line 32</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">authorized_records</span>(<span class="ruby-value">records:</span>)
   <span class="ruby-constant">Pundit</span>.<span class="ruby-identifier">policy_scope</span>(<span class="ruby-identifier">policy_context</span>, <span class="ruby-identifier">records</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -262,7 +271,7 @@
 
           
           <div class="method-source-code" id="permitted_field-3F-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/policies/pundit_provider.rb, line 26</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/policies/pundit_provider.rb, line 36</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">permitted_field?</span>(<span class="ruby-value">record:</span>, <span class="ruby-value">field_name:</span>)
   <span class="ruby-identifier">policy</span> = <span class="ruby-identifier">policy_for</span>(<span class="ruby-value">record:</span> <span class="ruby-identifier">record</span>)
 

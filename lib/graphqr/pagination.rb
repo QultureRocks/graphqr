@@ -2,7 +2,11 @@
 
 module GraphQR
   ##
-  # TODO: add documentation
+  # This module adds the GraphQL pagination types.
+  #
+  # When a field is paginated, the field `page_info` is always included with some pagination information.
+  #
+  # To use this module use `extend GraphQR::Pagination` on the objects you want it (or in your `BaseObject`)
   module Pagination
     def pagination_type
       @pagination_type ||= begin

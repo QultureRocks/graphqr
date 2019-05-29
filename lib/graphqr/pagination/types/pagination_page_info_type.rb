@@ -4,7 +4,7 @@ module GraphQR
   module Pagination
     module Types
       ##
-      # TODO: add documentation
+      # This defines the information about pagination in a connection.
       class PaginationPageInfoType < GraphQL::Schema::Object
         description 'Information about pagination in a connection.'
 

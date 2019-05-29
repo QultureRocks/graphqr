@@ -3,9 +3,13 @@
 module GraphQR
   module Pagination
     ##
-    # TODO: add documentation
+    # The PaginationExtension is used on the `GraphQR::Fields::BaseField`.
+    #
+    # It adds the `per` and `page` arguments to the paginated field and uses the selected paginator resolver to add
+    # `nodes`, `edges` and `page_info` on the response
     class PaginationExtension < GraphQL::Schema::FieldExtension
-      DEFAULT_PAGINATION_ERROR = 'No paginator defined'
+      NO_PAGINATOR_ERROR = 'No paginator defined'
+      INVALID_PAGINATOR_ERROR = 'Invalid paginator'
 
       def apply
         field.argument :per, 'Int', required: false, default_value: 25,
@@ -23,9 +27,18 @@ module GraphQR
       end
 
       def after_resolve(value:, arguments:, **_kwargs)
-        raise GraphQL::ExecutionError, DEFAULT_PAGINATION_ERROR unless GraphQR.paginator.present?
+        raise GraphQL::ExecutionError, NO_PAGINATOR_ERROR unless GraphQR.paginator.present?
 
-        Resolvers::PagyResolver.new(value, items: arguments[:per], page: arguments[:page]) if GraphQR.use_pagy?
+        call_resolver(value, arguments)
+      end
+
+      def call_resolver(value, arguments)
+        case GraphQR.paginator
+        when :pagy
+          Resolvers::PagyResolver.new(value, items: arguments[:per], page: arguments[:page])
+        else
+          raise GraphQL::ExecutionError, INVALID_PAGINATOR_ERROR
+        end
       end
     end
   end

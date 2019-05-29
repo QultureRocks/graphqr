@@ -2,7 +2,7 @@
 
 module GraphQR # rubocop:disable Style/Documentation
   ##
-  # TODO: add documentation
+  # Module responsible for global configuration of the gem
   class Configuration
     def configure
       yield self

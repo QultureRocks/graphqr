@@ -2,7 +2,10 @@
 
 module GraphQR
   ##
-  # TODO: add documentation
+  # This is an extension used on the `GraphQR::Fields::BaseField`.
+  #
+  # It is responsible for authorizing each field within a query.
+  # It searches if the field is defined on the `permitted_fields` method of the policy
   class PermittedFieldsExtension < GraphQL::Schema::FieldExtension
     def resolve(object:, arguments:, context:)
       if authorized?(object, context)
