@@ -37,6 +37,12 @@ rescue NameError
   Kernel.warn 'Pagy not found'
 end
 
+begin
+  require 'graphqr/policies/pundit_provider'
+rescue LoadError
+  Kernel.warn 'Pundit not found'
+end
+
 require 'graphqr/apply_scopes'
 require 'graphqr/authorized'
 require 'graphqr/base'
