@@ -11,8 +11,16 @@ module GraphQR
       GraphQR.config.paginator
     end
 
+    def policy_provider
+      GraphQR.config.policy_provider
+    end
+
     def use_pagy?
       paginator == :pagy
+    end
+
+    def use_pundit?
+      policy_provider == :pundit
     end
   end
 end
@@ -27,6 +35,12 @@ begin
   require 'graphqr/pagination/resolvers/pagy_resolver'
 rescue NameError
   Kernel.warn 'Pagy not found'
+end
+
+begin
+  require 'graphqr/policies/pundit_provider'
+rescue LoadError
+  Kernel.warn 'Pundit not found'
 end
 
 require 'graphqr/apply_scopes'
