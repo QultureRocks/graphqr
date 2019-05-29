@@ -46,6 +46,7 @@ rescue NameError
   Kernel.warn 'Pagy not found'
 end
 
+require 'graphqr/policies/authorize_graphql'
 begin
   require 'graphqr/policies/pundit_provider'
 rescue LoadError
@@ -54,7 +55,6 @@ end
 
 require 'graphqr/apply_scopes'
 require 'graphqr/authorized'
-require 'graphqr/base'
 require 'graphqr/pagination'
 require 'graphqr/permitted_fields_extension'
 require 'graphqr/query_field'

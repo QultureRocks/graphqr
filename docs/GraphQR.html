@@ -74,6 +74,10 @@
     
     <li ><a href="#method-c-policy_provider">::policy_provider</a>
     
+    <li ><a href="#method-c-use_authorization">::use_authorization</a>
+    
+    <li ><a href="#method-c-use_pagination">::use_pagination</a>
+    
     <li ><a href="#method-c-use_pagy-3F">::use_pagy?</a>
     
     <li ><a href="#method-c-use_pundit-3F">::use_pundit?</a>
@@ -145,7 +149,7 @@
 
           
           <div class="method-source-code" id="config-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/configuration.rb, line 81</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/configuration.rb, line 99</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">config</span>
   <span class="ruby-ivar">@config</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Configuration</span>.<span class="ruby-identifier">new</span> <span class="ruby-comment"># rubocop:disable ThreadSafety/InstanceVariableInClassMethod</span>
 <span class="ruby-keyword">end</span></pre>
@@ -210,7 +214,7 @@
 
           
           <div class="method-source-code" id="configure-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/configuration.rb, line 77</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/configuration.rb, line 95</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">configure</span>
   <span class="ruby-keyword">yield</span> <span class="ruby-identifier">config</span>
 <span class="ruby-keyword">end</span></pre>
@@ -243,7 +247,7 @@
 
           
           <div class="method-source-code" id="paginator-source">
-            <pre><span class="ruby-comment"># File lib/graphqr.rb, line 11</span>
+            <pre><span class="ruby-comment"># File lib/graphqr.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">paginator</span>
   <span class="ruby-constant">GraphQR</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">paginator</span>
 <span class="ruby-keyword">end</span></pre>
@@ -276,9 +280,75 @@
 
           
           <div class="method-source-code" id="policy_provider-source">
-            <pre><span class="ruby-comment"># File lib/graphqr.rb, line 15</span>
+            <pre><span class="ruby-comment"># File lib/graphqr.rb, line 23</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">policy_provider</span>
   <span class="ruby-constant">GraphQR</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">policy_provider</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-use_authorization" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">use_authorization</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="use_authorization-source">
+            <pre><span class="ruby-comment"># File lib/graphqr.rb, line 15</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">use_authorization</span>
+  <span class="ruby-constant">GraphQR</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">use_authorization</span> <span class="ruby-operator">||</span> <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-use_pagination" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">use_pagination</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="use_pagination-source">
+            <pre><span class="ruby-comment"># File lib/graphqr.rb, line 11</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">use_pagination</span>
+  <span class="ruby-constant">GraphQR</span>.<span class="ruby-identifier">config</span>.<span class="ruby-identifier">use_pagination</span> <span class="ruby-operator">||</span> <span class="ruby-keyword">true</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -309,7 +379,7 @@
 
           
           <div class="method-source-code" id="use_pagy-3F-source">
-            <pre><span class="ruby-comment"># File lib/graphqr.rb, line 19</span>
+            <pre><span class="ruby-comment"># File lib/graphqr.rb, line 27</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">use_pagy?</span>
   <span class="ruby-identifier">paginator</span> <span class="ruby-operator">==</span> <span class="ruby-value">:pagy</span>
 <span class="ruby-keyword">end</span></pre>
@@ -342,7 +412,7 @@
 
           
           <div class="method-source-code" id="use_pundit-3F-source">
-            <pre><span class="ruby-comment"># File lib/graphqr.rb, line 23</span>
+            <pre><span class="ruby-comment"># File lib/graphqr.rb, line 31</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">use_pundit?</span>
   <span class="ruby-identifier">policy_provider</span> <span class="ruby-operator">==</span> <span class="ruby-value">:pundit</span>
 <span class="ruby-keyword">end</span></pre>

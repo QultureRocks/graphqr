@@ -152,8 +152,8 @@
             <pre><span class="ruby-comment"># File lib/graphqr/fields/base_field.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-value">paginate:</span> <span class="ruby-keyword">false</span>, <span class="ruby-operator">**</span><span class="ruby-identifier">kwargs</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword">super</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">**</span><span class="ruby-identifier">kwargs</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-  <span class="ruby-identifier">extension</span>(<span class="ruby-constant">Pagination</span><span class="ruby-operator">::</span><span class="ruby-constant">PaginationExtension</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">paginate</span>
-  <span class="ruby-identifier">extension</span>(<span class="ruby-constant">PermittedFieldsExtension</span>, <span class="ruby-value">null:</span> <span class="ruby-identifier">kwargs</span>[<span class="ruby-value">:null</span>])
+  <span class="ruby-identifier">extension</span>(<span class="ruby-constant">Pagination</span><span class="ruby-operator">::</span><span class="ruby-constant">PaginationExtension</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">paginate</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">GraphQR</span>.<span class="ruby-identifier">use_pagination</span>
+  <span class="ruby-identifier">extension</span>(<span class="ruby-constant">PermittedFieldsExtension</span>, <span class="ruby-value">null:</span> <span class="ruby-identifier">kwargs</span>[<span class="ruby-value">:null</span>]) <span class="ruby-keyword">if</span> <span class="ruby-constant">GraphQR</span>.<span class="ruby-identifier">use_authorization</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

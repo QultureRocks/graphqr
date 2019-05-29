@@ -53,7 +53,17 @@
     <ul>
       <li><a href="README_md.html#label-GraphQR">GraphQR</a>
       <li><a href="README_md.html#label-Installation">Installation</a>
+      <li><a href="README_md.html#label-Configuration+-28optional-29">Configuration (optional)</a>
+      <li><a href="README_md.html#label-Modules">Modules</a>
+      <li><a href="README_md.html#label-Pagination">Pagination</a>
       <li><a href="README_md.html#label-Usage">Usage</a>
+      <li><a href="README_md.html#label-Authorization">Authorization</a>
+      <li><a href="README_md.html#label-Authorized">Authorized</a>
+      <li><a href="README_md.html#label-ScopeItems">ScopeItems</a>
+      <li><a href="README_md.html#label-AuthorizeGraphQL">AuthorizeGraphQL</a>
+      <li><a href="README_md.html#label-Helpers">Helpers</a>
+      <li><a href="README_md.html#label-ApplyScopes">ApplyScopes</a>
+      <li><a href="README_md.html#label-QueryField">QueryField</a>
       <li><a href="README_md.html#label-Development">Development</a>
       <li><a href="README_md.html#label-Contributing">Contributing</a>
       <li><a href="README_md.html#label-License">License</a>
@@ -82,9 +92,6 @@
   </li>
   <li class="module">
     <a href="GraphQR/Authorized.html">GraphQR::Authorized</a>
-  </li>
-  <li class="module">
-    <a href="GraphQR/Base.html">GraphQR::Base</a>
   </li>
   <li class="class">
     <a href="GraphQR/Configuration.html">GraphQR::Configuration</a>
@@ -123,6 +130,9 @@
   </li>
   <li class="module">
     <a href="GraphQR/Policies.html">GraphQR::Policies</a>
+  </li>
+  <li class="module">
+    <a href="GraphQR/Policies/AuthorizeGraphQL.html">GraphQR::Policies::AuthorizeGraphQL</a>
   </li>
   <li class="class">
     <a href="GraphQR/Policies/PunditProvider.html">GraphQR::Policies::PunditProvider</a>
@@ -179,6 +189,16 @@
     <span class="container">GraphQR</span>
 
   <li class="method">
+    <a href="GraphQR.html#method-c-use_authorization">::use_authorization</a>
+    &mdash;
+    <span class="container">GraphQR</span>
+
+  <li class="method">
+    <a href="GraphQR.html#method-c-use_pagination">::use_pagination</a>
+    &mdash;
+    <span class="container">GraphQR</span>
+
+  <li class="method">
     <a href="GraphQR.html#method-c-use_pagy-3F">::use_pagy?</a>
     &mdash;
     <span class="container">GraphQR</span>
@@ -209,9 +229,9 @@
     <span class="container">GraphQR::ApplyScopes</span>
 
   <li class="method">
-    <a href="GraphQR/Base.html#method-i-authorize_graphql">#authorize_graphql</a>
+    <a href="GraphQR/Policies/AuthorizeGraphQL.html#method-i-authorize_graphql">#authorize_graphql</a>
     &mdash;
-    <span class="container">GraphQR::Base</span>
+    <span class="container">GraphQR::Policies::AuthorizeGraphQL</span>
 
   <li class="method">
     <a href="GraphQR/Authorized.html#method-i-authorized-3F">#authorized?</a>
@@ -284,9 +304,9 @@
     <span class="container">GraphQR::Configuration</span>
 
   <li class="method">
-    <a href="GraphQR/Base.html#method-i-policy_provider">#policy_provider</a>
+    <a href="GraphQR/Policies/AuthorizeGraphQL.html#method-i-policy_provider">#policy_provider</a>
     &mdash;
-    <span class="container">GraphQR::Base</span>
+    <span class="container">GraphQR::Policies::AuthorizeGraphQL</span>
 
   <li class="method">
     <a href="GraphQR/Configuration.html#method-i-policy_provider-3D">#policy_provider=</a>
@@ -312,6 +332,16 @@
     <a href="GraphQR/ScopeItems.html#method-i-scope_items">#scope_items</a>
     &mdash;
     <span class="container">GraphQR::ScopeItems</span>
+
+  <li class="method">
+    <a href="GraphQR/Configuration.html#method-i-use_authorization">#use_authorization</a>
+    &mdash;
+    <span class="container">GraphQR::Configuration</span>
+
+  <li class="method">
+    <a href="GraphQR/Configuration.html#method-i-use_pagination">#use_pagination</a>
+    &mdash;
+    <span class="container">GraphQR::Configuration</span>
 </ul>
 </main>
 

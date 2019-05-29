@@ -81,7 +81,7 @@
     
 <p>This extension adds the PolicyProvider scope to the fields. When using the extension, ActiveRecord::Relation fields will be scoped.</p>
 
-<p>To use this extension add <code>extend GraphQR::ScopeItems</code> on the Objects you want, or in your <code>BaseObject</code></p>
+<p>To use this extension add <code>extend GraphQR::ScopeItems</code> on the <code>GraphQL::Schema::Object</code> you want, or in your <code>BaseObject</code></p>
 
   </section>
 
@@ -115,13 +115,13 @@
 
         <div class="method-description">
           
-          <p>The method checks whether the items are a ActiveRecord::Relationor not. If they are, it runs the PolicyProvider <code>authorized_records</code> scope.</p>
+          <p>The method checks whether the items are a ActiveRecord::Relation or not. If they are, it runs the PolicyProvider <code>authorized_records</code> scope.</p>
           
           
 
           
           <div class="method-source-code" id="scope_items-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/scope_items.rb, line 13</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/scope_items.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">scope_items</span>(<span class="ruby-identifier">items</span>, <span class="ruby-identifier">context</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">scopable_items?</span>(<span class="ruby-identifier">items</span>)
     <span class="ruby-identifier">context</span>[<span class="ruby-value">:policy_provider</span>].<span class="ruby-identifier">authorized_records</span>(<span class="ruby-value">records:</span> <span class="ruby-identifier">items</span>)

@@ -81,7 +81,7 @@
     
 <p>This module is the authorization extension created with our PolicyProvider.</p>
 
-<p>To use it add <code>extend GraphQR::Authorized</code> on the object you want it, or add it on your <code>BaseObject</code></p>
+<p>To use it add <code>extend GraphQR::Authorized</code> on the <code>GraphQL::Schema::Object</code> you want it, or add it on your <code>BaseObject</code></p>
 
   </section>
 
@@ -115,7 +115,7 @@
 
         <div class="method-description">
           
-          <p>The <code>authorized?</code>method always runs before rendering an object.</p>
+          <p>The <code>authorized?</code>method always runs before resolving an object.</p>
 
 <p>Our implementation adds a check on the <code>show?</code> method from the record Policy.</p>
           
@@ -128,7 +128,7 @@
 
           
           <div class="method-source-code" id="authorized-3F-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/authorized.rb, line 13</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/authorized.rb, line 14</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">authorized?</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">context</span>)
   <span class="ruby-identifier">policy_provider</span> = <span class="ruby-identifier">context</span>[<span class="ruby-value">:policy_provider</span>]
 
