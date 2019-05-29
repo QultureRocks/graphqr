@@ -18,8 +18,8 @@ module GraphQR
     class BaseField < GraphQL::Schema::Field
       def initialize(*args, paginate: false, **kwargs, &block)
         super(*args, **kwargs, &block)
-        extension(Pagination::PaginationExtension) if paginate
-        extension(PermittedFieldsExtension, null: kwargs[:null])
+        extension(Pagination::PaginationExtension) if paginate && GraphQR.use_pagination
+        extension(PermittedFieldsExtension, null: kwargs[:null]) if GraphQR.use_authorization
       end
     end
   end

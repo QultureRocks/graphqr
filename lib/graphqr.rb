@@ -8,6 +8,14 @@ require 'graphqr/configuration'
 # it contains helpers and integrations we need to keep our workflow as simple as possible.
 module GraphQR
   class << self
+    def use_pagination
+      GraphQR.config.use_pagination || true
+    end
+
+    def use_authorization
+      GraphQR.config.use_authorization || true
+    end
+
     def paginator
       GraphQR.config.paginator
     end

@@ -4,8 +4,26 @@ module GraphQR # rubocop:disable Style/Documentation
   ##
   # Module responsible for global configuration of the gem
   class Configuration
+    attr_writer :use_pagination, :use_authorization
+
     def configure
       yield self
+    end
+
+    def use_pagination
+      if instance_variable_defined? :@use_pagination
+        @use_pagination
+      else
+        @use_pagination = true
+      end
+    end
+
+    def use_authorization
+      if instance_variable_defined? :@use_authorization
+        @use_authorization
+      else
+        @use_authorization = true
+      end
     end
 
     ##
