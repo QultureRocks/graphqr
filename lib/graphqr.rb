@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'graphql'
+require 'graphqr/configuration'
 
 ##
 # This module represents all the extensions we made to the graphql-ruby library
