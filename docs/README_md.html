@@ -148,9 +148,16 @@
 
 <h2 id="label-Modules">Modules<span><a href="#label-Modules">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
-<p>To use the extensions correctly add <code> field_class GraphQR::Fields::BaseField </code></p>
+<p>To use the extensions correctly add <code>ruby     field_class GraphQR::Fields::BaseField </code> to your <code>BaseObject</code> class. This will add the custom options to your fields and add the necessary extensions according to the modules you activated.</p>
 
-<p>to your <code>BaseObject</code> class. This will add the <code>paginate</code> options to your fields and add the necessary extensions according to the modules you activated.</p>
+<pre class="ruby"><span class="ruby-keyword">module</span> <span class="ruby-constant">Types</span>
+  <span class="ruby-keyword">class</span> <span class="ruby-constant">BaseObject</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">GraphQL</span><span class="ruby-operator">::</span><span class="ruby-constant">Schema</span><span class="ruby-operator">::</span><span class="ruby-constant">Object</span>
+    <span class="ruby-operator">...</span>
+    <span class="ruby-identifier">field_class</span> <span class="ruby-constant">GraphQR</span><span class="ruby-operator">::</span><span class="ruby-constant">Fields</span><span class="ruby-operator">::</span><span class="ruby-constant">BaseField</span>
+    <span class="ruby-operator">...</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
 
 <h3 id="label-Pagination">Pagination<span><a href="#label-Pagination">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
@@ -158,14 +165,30 @@
 
 <p>To use the Pagination module add</p>
 
-<pre class="ruby"><span class="ruby-identifier">extend</span> <span class="ruby-constant">GraphQR</span><span class="ruby-operator">::</span><span class="ruby-constant">Pagination</span>
+<pre class="ruby">
+<span class="ruby-identifier">extend</span> <span class="ruby-constant">GraphQR</span><span class="ruby-operator">::</span><span class="ruby-constant">Pagination</span>
 </pre>
 
 <p>to any <code>GraphQL::Schema::Object</code> you&#39;d like, but we recommend adding it to your <code>BaseObject</code> class.</p>
 
+<pre class="ruby"><span class="ruby-keyword">module</span> <span class="ruby-constant">Types</span>
+  <span class="ruby-keyword">class</span> <span class="ruby-constant">BaseObject</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">GraphQL</span><span class="ruby-operator">::</span><span class="ruby-constant">Schema</span><span class="ruby-operator">::</span><span class="ruby-constant">Object</span>
+    <span class="ruby-operator">...</span>
+    <span class="ruby-identifier">extend</span> <span class="ruby-constant">GraphQR</span><span class="ruby-operator">::</span><span class="ruby-constant">Pagination</span>
+    <span class="ruby-operator">...</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
 <h4 id="label-Usage">Usage<span><a href="#label-Usage">&para;</a> <a href="#top">&uarr;</a></span></h4>
 
-<pre class="ruby"><span class="ruby-identifier">field</span> <span class="ruby-value">:users</span>, <span class="ruby-constant">UserType</span>.<span class="ruby-identifier">pagination_type</span>, <span class="ruby-value">paginate:</span> <span class="ruby-keyword">true</span>
+<pre class="ruby"><span class="ruby-keyword">module</span> <span class="ruby-constant">Types</span>
+  <span class="ruby-keyword">class</span> <span class="ruby-constant">QueryType</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Types</span><span class="ruby-operator">::</span><span class="ruby-constant">BaseObject</span>
+    <span class="ruby-identifier">graphql_name</span> <span class="ruby-string">&#39;Query&#39;</span>
+
+    <span class="ruby-identifier">field</span> <span class="ruby-value">:users</span>, <span class="ruby-constant">UserType</span>.<span class="ruby-identifier">pagination_type</span>, <span class="ruby-value">paginate:</span> <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
 </pre>
 
 <p>A <code>pagination_type</code> adds the <code>per</code> and <code>page</code> arguments and adds a <code>page_info</code> field to the response.</p>
@@ -176,18 +199,38 @@
 
 <p>The Authorization module in some wrappers around a <code>PolicyProvider</code> (only Pundit for now). And allows some basic behaviors. Everything on this module depends on a <code>policy_provider</code> passed to the GraphQL context. You can add it like this:</p>
 
-<pre>context = {
-  policy_provider: GraphQR::Policies::PunditProvider.new(policy_context: pundit_user)
-  ...
-}
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">GraphqlController</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">ApplicationController</span>
 
-Schema.execute(query, variables: variables, context: context, operation_name: operation_name)</pre>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">execute</span>
+    <span class="ruby-identifier">context</span> = {
+      <span class="ruby-identifier">your_context</span>,
+      <span class="ruby-value">policy_provider:</span> <span class="ruby-identifier">policy_provider</span>
+    }
+    <span class="ruby-identifier">result</span> = <span class="ruby-constant">YourSchema</span>.<span class="ruby-identifier">execute</span>(<span class="ruby-identifier">query</span>, <span class="ruby-value">variables:</span> <span class="ruby-identifier">variables</span>, <span class="ruby-value">context:</span> <span class="ruby-identifier">context</span>, <span class="ruby-value">operation_name:</span> <span class="ruby-identifier">operation_name</span>)
+    <span class="ruby-identifier">render</span> <span class="ruby-value">json:</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">to_json</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span> <span class="ruby-operator">=&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-identifier">e</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">env</span>.<span class="ruby-identifier">development?</span>
+
+    <span class="ruby-identifier">handle_error_in_development</span>(<span class="ruby-identifier">e</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-operator">...</span>
+<span class="ruby-keyword">end</span>
+</pre>
 
 <h4 id="label-Authorized">Authorized<span><a href="#label-Authorized">&para;</a> <a href="#top">&uarr;</a></span></h4>
 
 <p>This module adds a check on the object policy before resolving it. It always searches for the <code>show?</code> policy of the record. It works by extending the <code>authorized?</code> method.</p>
 
-<p>To add this behavior, add <code> extend GraphQR::Authorized </code> to any <code>GraphQL::Schema::Object</code> you&#39;d like, but we recommend adding it to your <code>BaseObject</code> class.</p>
+<p>To add this behavior, add <code>ruby extend GraphQR::Authorized </code> to any <code>GraphQL::Schema::Object</code> you&#39;d like, but we recommend adding it to your <code>BaseObject</code> class.</p>
+
+<pre class="ruby"><span class="ruby-keyword">module</span> <span class="ruby-constant">Types</span>
+  <span class="ruby-keyword">class</span> <span class="ruby-constant">BaseObject</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">GraphQL</span><span class="ruby-operator">::</span><span class="ruby-constant">Schema</span><span class="ruby-operator">::</span><span class="ruby-constant">Object</span>
+    <span class="ruby-operator">...</span>
+    <span class="ruby-identifier">extend</span> <span class="ruby-constant">GraphQR</span><span class="ruby-operator">::</span><span class="ruby-constant">Authorized</span>
+    <span class="ruby-operator">...</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
 
 <p>Example:</p>
 
@@ -205,7 +248,16 @@ Schema.execute(query, variables: variables, context: context, operation_name: op
 
 <p>This module adds the PolicyProvider scope to the fields that represent an <code>ActiveRecord::Relation</code>. It works by implementing the <code>self.scope_items</code> method.</p>
 
-<p>To add this behavior, add <code> extend GraphQR::ScopeItems </code> to any <code>GraphQL::Schema::Object</code> you&#39;d like, but we recommend adding it to your <code>BaseObject</code> class.</p>
+<p>To add this behavior, add <code>ruby extend GraphQR::ScopeItems </code> to any <code>GraphQL::Schema::Object</code> you&#39;d like, but we recommend adding it to your <code>BaseObject</code> class.</p>
+
+<pre class="ruby"><span class="ruby-keyword">module</span> <span class="ruby-constant">Types</span>
+  <span class="ruby-keyword">class</span> <span class="ruby-constant">BaseObject</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">GraphQL</span><span class="ruby-operator">::</span><span class="ruby-constant">Schema</span><span class="ruby-operator">::</span><span class="ruby-constant">Object</span>
+    <span class="ruby-operator">...</span>
+    <span class="ruby-identifier">extend</span> <span class="ruby-constant">GraphQR</span><span class="ruby-operator">::</span><span class="ruby-constant">ScopeItems</span>
+    <span class="ruby-operator">...</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
 
 <p>Example:</p>
 
@@ -220,7 +272,14 @@ Schema.execute(query, variables: variables, context: context, operation_name: op
 
 <p>This module is a wrapper around the PolicyProvider authorization. It adds the <code>authorize_graphql</code> method, similar to Pundit&#39;s <code>authorize</code>, but it returns an <code>GraphQL::ExecutionError</code> instead of a <code>Pundit::NotAuthorizedError</code></p>
 
-<p>To add this behavior, add <code> include GraphQR::AuthorizeGraphQL </code> where you want to use this methos, but we recommend adding it to your <code>Mutations</code> and <code>Resolvers</code> classes.</p>
+<p>To add this behavior, add <code>ruby include GraphQR::Policies::AuthorizeGraphQL </code> where you want to use this methos, but we recommend adding it to your <code>Mutations</code> and <code>Resolvers</code> classes.</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">BaseResolver</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">GraphQL</span><span class="ruby-operator">::</span><span class="ruby-constant">Schema</span><span class="ruby-operator">::</span><span class="ruby-constant">Resolver</span>
+  <span class="ruby-operator">...</span>
+  <span class="ruby-identifier">include</span> <span class="ruby-constant">GraphQR</span><span class="ruby-operator">::</span><span class="ruby-constant">Policies</span><span class="ruby-operator">::</span><span class="ruby-constant">AuthorizeGraphQL</span>
+  <span class="ruby-operator">...</span>
+<span class="ruby-keyword">end</span>
+</pre>
 
 <p>Example:</p>
 
@@ -235,7 +294,14 @@ Schema.execute(query, variables: variables, context: context, operation_name: op
 
 <p>This modules is based on the <a href="https://github.com/plataformatec/has_scope/">has_scope</a> gem. It provides an <code>apply_scopes</code> method that can search for model scopes and use them on a collection</p>
 
-<p>To add this method, add <code> include GraphQR::ApplyScopes </code> where you&#39;d like to use it, but we recommend adding it to your <code>Resolvers</code>.</p>
+<p>To add this method, add <code>ruby include GraphQR::ApplyScopes </code> where you&#39;d like to use it, but we recommend adding it to your <code>Resolvers</code>.</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">BaseResolver</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">GraphQL</span><span class="ruby-operator">::</span><span class="ruby-constant">Schema</span><span class="ruby-operator">::</span><span class="ruby-constant">Resolver</span>
+  <span class="ruby-operator">...</span>
+  <span class="ruby-identifier">include</span> <span class="ruby-constant">GraphQR</span><span class="ruby-operator">::</span><span class="ruby-constant">ApplyScopes</span>
+  <span class="ruby-operator">...</span>
+<span class="ruby-keyword">end</span>
+</pre>
 
 <p>Example:</p>
 
@@ -246,7 +312,16 @@ Schema.execute(query, variables: variables, context: context, operation_name: op
 
 <p>This module adds the <code>query_field</code> helper. It adds an easy way of creating simple fields with resolvers.</p>
 
-<p>To add this method, add <code> extend GraphQR::QueryField </code> to your <code>BaseObject</code>.</p>
+<p>To add this method, add <code>ruby extend GraphQR::QueryField </code> to your <code>BaseObject</code>.</p>
+
+<pre class="ruby"><span class="ruby-keyword">module</span> <span class="ruby-constant">Types</span>
+  <span class="ruby-keyword">class</span> <span class="ruby-constant">BaseObject</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">GraphQL</span><span class="ruby-operator">::</span><span class="ruby-constant">Schema</span><span class="ruby-operator">::</span><span class="ruby-constant">Object</span>
+    <span class="ruby-operator">...</span>
+    <span class="ruby-identifier">extend</span> <span class="ruby-constant">GraphQR</span><span class="ruby-operator">::</span><span class="ruby-constant">QueryField</span>
+    <span class="ruby-operator">...</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
 
 <p>Read more about its use in the <a href="https://qulturerocks.github.io/graphqr/GraphQR/QueryField.html">documentation</a></p>
 
