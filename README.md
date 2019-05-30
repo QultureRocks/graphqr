@@ -31,7 +31,7 @@ Or install it yourself as:
 GraphQR uses `pagy` and `pundit` by default and activates both `Authorization` and `Pagination` modules.
 If you'd like to create a specific configuration, create `config/initializers/graphql.rb` with
 
-```
+```ruby
 GraphQR.configure do |config|
   config.use_pagination = true # or false to disable
   config.use_authorization = true # or false to disable
@@ -44,12 +44,20 @@ end
 ## Modules
 
 To use the extensions correctly add
+```ruby
+    field_class GraphQR::Fields::BaseField
 ```
-field_class GraphQR::Fields::BaseField
+to your `BaseObject` class. This will add the custom options to your fields and add the necessary extensions according to the modules you activated.
+
+```ruby
+module Types
+  class BaseObject < GraphQL::Schema::Object
+    ...
+    field_class GraphQR::Fields::BaseField
+    ...
+  end
+end
 ```
-
-to your `BaseObject` class. This will add the `paginate` options to your fields and add the necessary extensions according to the modules you activated.
-
 ### Pagination
 
 The Pagination module consists in a easier way of dealing with pages. Instead of using `cursors` we implemented a more Rails way using `per` and `page`.
@@ -57,16 +65,33 @@ Our implementation is (for now) based on [Pagy](https://github.com/ddnexus/pagy)
 
 To use the Pagination module add
 
-```
+```ruby
+
 extend GraphQR::Pagination
 ```
 
 to any `GraphQL::Schema::Object` you'd like, but we recommend adding it to your `BaseObject` class.
 
+```ruby
+module Types
+  class BaseObject < GraphQL::Schema::Object
+    ...
+    extend GraphQR::Pagination
+    ...
+  end
+end
+```
+
 #### Usage
 
-```
-field :users, UserType.pagination_type, paginate: true
+```ruby
+module Types
+  class QueryType < Types::BaseObject
+    graphql_name 'Query'
+
+    field :users, UserType.pagination_type, paginate: true
+  end
+end
 ```
 
 A `pagination_type` adds the `per` and `page` arguments and adds a `page_info` field to the response.
@@ -86,13 +111,23 @@ users(per: 10, page: 1) {
 The Authorization module in some wrappers around a `PolicyProvider` (only Pundit for now). And allows some basic behaviors.
 Everything on this module depends on a `policy_provider` passed to the GraphQL context. You can add it like this:
 
-```
-context = {
-  policy_provider: GraphQR::Policies::PunditProvider.new(policy_context: pundit_user)
-  ...
-}
+```ruby
+class GraphqlController < ApplicationController
 
-Schema.execute(query, variables: variables, context: context, operation_name: operation_name)
+  def execute
+    context = {
+      your_context,
+      policy_provider: policy_provider
+    }
+    result = YourSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+    render json: result.to_json
+  rescue StandardError => e
+    raise e unless Rails.env.development?
+
+    handle_error_in_development(e)
+  end
+  ...
+end
 ```
 
 #### Authorized
@@ -101,10 +136,20 @@ This module adds a check on the object policy before resolving it. It always sea
 It works by extending the `authorized?` method.
 
 To add this behavior, add
-```
+```ruby
 extend GraphQR::Authorized
 ```
 to any `GraphQL::Schema::Object` you'd like, but we recommend adding it to your `BaseObject` class.
+
+```ruby
+module Types
+  class BaseObject < GraphQL::Schema::Object
+    ...
+    extend GraphQR::Authorized
+    ...
+  end
+end
+```
 
 Example:
 
@@ -125,10 +170,20 @@ If any policy returns falsy, the object is returned as `null`.
 This module adds the PolicyProvider scope to the fields that represent an `ActiveRecord::Relation`. It works by implementing the `self.scope_items` method.
 
 To add this behavior, add
-```
+```ruby
 extend GraphQR::ScopeItems
 ```
 to any `GraphQL::Schema::Object` you'd like, but we recommend adding it to your `BaseObject` class.
+
+```ruby
+module Types
+  class BaseObject < GraphQL::Schema::Object
+    ...
+    extend GraphQR::ScopeItems
+    ...
+  end
+end
+```
 
 Example:
 
@@ -146,14 +201,22 @@ This module is a wrapper around the PolicyProvider authorization.
 It adds the `authorize_graphql` method, similar to Pundit's `authorize`, but it returns an `GraphQL::ExecutionError` instead of a `Pundit::NotAuthorizedError`
 
 To add this behavior, add
-```
-include GraphQR::AuthorizeGraphQL
+```ruby
+include GraphQR::Policies::AuthorizeGraphQL
 ```
 where you want to use this methos, but we recommend adding it to your `Mutations` and `Resolvers` classes.
 
+```ruby
+class BaseResolver < GraphQL::Schema::Resolver
+  ...
+  include GraphQR::Policies::AuthorizeGraphQL
+  ...
+end
+```
+
 Example:
 
-```
+```ruby
 authorize_graphql User, :index?
 ```
 
@@ -167,14 +230,22 @@ This modules is based on the [has_scope](https://github.com/plataformatec/has_sc
 It provides an `apply_scopes` method that can search for model scopes and use them on a collection
 
 To add this method, add
-```
+```ruby
 include GraphQR::ApplyScopes
 ```
 where you'd like to use it, but we recommend adding it to your `Resolvers`.
 
+```ruby
+class BaseResolver < GraphQL::Schema::Resolver
+  ...
+  include GraphQR::ApplyScopes
+  ...
+end
+```
+
 Example:
 
-```
+```ruby
 apply_scopes(User, { order_by_name: true, with_id: [1,2,3] })
 ```
 
@@ -184,10 +255,20 @@ This module adds the `query_field` helper.
 It adds an easy way of creating simple fields with resolvers.
 
 To add this method, add
-```
+```ruby
 extend GraphQR::QueryField
 ```
 to your `BaseObject`.
+
+```ruby
+module Types
+  class BaseObject < GraphQL::Schema::Object
+    ...
+    extend GraphQR::QueryField
+    ...
+  end
+end
+```
 
 Read more about its use in the [documentation](https://qulturerocks.github.io/graphqr/GraphQR/QueryField.html)
 
