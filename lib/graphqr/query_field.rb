@@ -53,6 +53,14 @@ module GraphQR
       field(field_name, paginate: is_collection, resolver: resolver, **kwargs, &block)
     end
 
+    #
+    # The `has_many_field` method is a variation of the collection query_field.
+    #
+    # It is to be used the same way, but it requires the #object attribute to be present
+    # during the field resolve execution. This object must have a :has_many relation with
+    # the active_record veing resolved.
+    #
+    # The query will be performed within the objects children instead of the active record class.
     def has_many_field(field_name, active_record_class, type_class:, scope_class: nil, **kwargs, &block)
       active_record_class = active_record_class.first
       resolver = has_many_collection(field_name, active_record_class, type_class, scope_class)
