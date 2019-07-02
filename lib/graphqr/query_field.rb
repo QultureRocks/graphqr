@@ -52,6 +52,13 @@ module GraphQR
 
       field(field_name, paginate: is_collection, resolver: resolver, **kwargs, &block)
     end
+
+    def has_many_field(field_name, active_record_class, type_class:, scope_class: nil, **kwargs, &block)
+      active_record_class = active_record_class.first
+      resolver = has_many_collection(field_name, active_record_class, type_class, scope_class)
+
+      field(field_name, paginate: true, resolver: resolver, **kwargs, &block)
+    end
     # rubocop:enable Metrics/ParameterLists
 
     private
@@ -97,6 +104,17 @@ module GraphQR
       collection(active_record_class, type_class, scope_class).class_eval do
         def collection
           active_record_class
+        end
+      end
+    end
+
+    def has_many_collection(field_name, active_record_class, type_class, scope_class)
+      collection(active_record_class, type_class, scope_class).class_eval do
+        class_attribute :field_name
+        self.field_name = field_name
+
+        def collection
+          object.send(field_name)
         end
       end
     end
