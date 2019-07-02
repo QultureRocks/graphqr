@@ -45,7 +45,7 @@ module GraphQR
       is_collection = active_record_class.is_a? Array
       if is_collection
         active_record_class = active_record_class.first
-        resolver = collection(active_record_class, type_class, scope_class)
+        resolver = query_collection(active_record_class, type_class, scope_class)
       else
         resolver = resource(active_record_class, type_class)
       end
@@ -55,24 +55,6 @@ module GraphQR
     # rubocop:enable Metrics/ParameterLists
 
     private
-
-    def collection(active_record_class, type_class, scope_class)
-      Class.new(::BaseResolver) do
-        class_attribute :active_record_class
-        self.active_record_class = active_record_class
-
-        type type_class.pagination_type, null: false
-
-        argument :filter, scope_class, required: false
-
-        def resolve(filter: {})
-          authorize_graphql active_record_class, :index?
-
-          collection = apply_scopes(active_record_class, filter)
-          context[:policy_provider].authorized_records(records: collection)
-        end
-      end
-    end
 
     def resource(active_record_class, type_class)
       Class.new(::BaseResolver) do
@@ -89,6 +71,32 @@ module GraphQR
           context[:policy_provider].allowed?(action: :show?, record: record)
 
           record
+        end
+      end
+    end
+
+    def collection(active_record_class, type_class, scope_class)
+      Class.new(::BaseResolver) do
+        class_attribute :active_record_class
+        self.active_record_class = active_record_class
+
+        type type_class.pagination_type, null: false
+
+        argument :filter, scope_class, required: false
+
+        def resolve(filter: {})
+          authorize_graphql active_record_class, :index?
+
+          scoped_collection = apply_scopes(collection, filter)
+          context[:policy_provider].authorized_records(records: scoped_collection)
+        end
+      end
+    end
+
+    def query_collection(active_record_class, type_class, scope_class)
+      collection(active_record_class, type_class, scope_class).class_eval do
+        def collection
+          active_record_class
         end
       end
     end
