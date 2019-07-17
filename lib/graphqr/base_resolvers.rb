@@ -7,7 +7,7 @@ module GraphQR
     ##
     # @TODO doc
     def base_collection_resolver(type_class, scope_class)
-      Class.new(::BaseResolver) do
+      Class.new(GraphQR::BaseResolver) do
         type type_class.pagination_type, null: false
 
         argument :filter, scope_class, required: false if scope_class.present?
@@ -19,12 +19,14 @@ module GraphQR
           context[:policy_provider].authorized_records(records: collection)
         end
 
-        def unscoped_collection; end
+        def unscoped_collection
+          raise NotImplementedError
+        end
       end
     end
 
     def base_resource_resolver(type_class)
-      Class.new(::BaseResolver) do
+      Class.new(GraphQR::BaseResolver) do
         type type_class, null: false
 
         def resolve
@@ -33,7 +35,9 @@ module GraphQR
           record
         end
 
-        def record; end
+        def record
+          raise NotImplementedError
+        end
       end
     end
   end
