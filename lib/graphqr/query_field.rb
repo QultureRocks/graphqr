@@ -7,7 +7,6 @@ module GraphQR
   #
   # To use this extension, add `extend Graphql::QueryField` on your `QueryType`
   #
-  # rubocop:disable Metrics/ParameterLists
   module QueryField
     include BaseResolvers
     ##
@@ -42,6 +41,8 @@ module GraphQR
     #
     # Single fields have the required `id` argument to find the exact record searched.
     # Its resolver will look for the `show?` method on the model Policy.
+    #
+    # rubocop:disable Metrics/ParameterLists
     def query_field(field_name, active_record_class, type_class:, scope_class: nil, **kwargs, &block)
       is_collection = active_record_class.is_a? Array
       if is_collection
