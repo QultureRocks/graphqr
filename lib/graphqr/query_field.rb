@@ -6,9 +6,10 @@ module GraphQR
   # A helper to create simple queries faster and easier
   #
   # To use this extension, add `extend Graphql::QueryField` on your `QueryType`
+  #
+  # rubocop:disable Metrics/ParameterLists
   module QueryField
-    # rubocop:disable Metrics/ParameterLists
-
+    include BaseResolvers
     ##
     # The `query_field` method is a helper to create fields and resolver without effort.
     #
@@ -45,9 +46,9 @@ module GraphQR
       is_collection = active_record_class.is_a? Array
       if is_collection
         active_record_class = active_record_class.first
-        resolver = collection(active_record_class, type_class, scope_class)
+        resolver = collection_resolver(active_record_class, type_class, scope_class)
       else
-        resolver = resource(active_record_class, type_class)
+        resolver = resource_resolver(active_record_class, type_class)
       end
 
       field(field_name, paginate: is_collection, resolver: resolver, **kwargs, &block)
@@ -56,39 +57,26 @@ module GraphQR
 
     private
 
-    def collection(active_record_class, type_class, scope_class)
-      Class.new(::BaseResolver) do
-        class_attribute :active_record_class
-        self.active_record_class = active_record_class
-
-        type type_class.pagination_type, null: false
-
-        argument :filter, scope_class, required: false
-
-        def resolve(filter: {})
-          authorize_graphql active_record_class, :index?
-
-          collection = apply_scopes(active_record_class, filter)
-          context[:policy_provider].authorized_records(records: collection)
-        end
-      end
+    def collection_resolver(active_record_class, type_class, scope_class)
+      resolver = base_collection_resolver(type_class, scope_class)
+      resolver.define_method(:unscoped_collection) { @unscoped_collection ||= active_record_class }
+      resolver
     end
 
-    def resource(active_record_class, type_class)
-      Class.new(::BaseResolver) do
+    def resource_resolver(active_record_class, type_class)
+      Class.new(base_resource_resolver(type_class)) do
         class_attribute :active_record_class
         self.active_record_class = active_record_class
-
-        type type_class, null: false
 
         argument :id, 'ID', required: true
 
         def resolve(id:)
-          record = self.class.active_record_class.find(id)
+          @id = id
+          super()
+        end
 
-          context[:policy_provider].allowed?(action: :show?, record: record)
-
-          record
+        def record
+          @record ||= active_record_class.find(@id)
         end
       end
     end
