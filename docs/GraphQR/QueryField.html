@@ -19,6 +19,7 @@
 
 
 
+
 <body id="top" role="document" class="module">
 <nav role="navigation">
   <div id="project-navigation">
@@ -56,7 +57,18 @@
   <div id="class-metadata">
     
     
-    
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="BaseResolvers.html">GraphQR::BaseResolvers</a>
+  
+  
+  </ul>
+</div>
+
     
     <!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
@@ -140,19 +152,21 @@
 <h3 id="method-i-query_field-label-Single+fields">Single fields<span><a href="#method-i-query_field-label-Single+fields">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
 <p>Single fields have the required <code>id</code> argument to find the exact record searched. Its resolver will look for the <code>show?</code> method on the model Policy.</p>
+
+<p>rubocop:disable Metrics/ParameterLists</p>
           
           
 
           
           <div class="method-source-code" id="query_field-source">
-            <pre><span class="ruby-comment"># File lib/graphqr/query_field.rb, line 44</span>
+            <pre><span class="ruby-comment"># File lib/graphqr/query_field.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">query_field</span>(<span class="ruby-identifier">field_name</span>, <span class="ruby-identifier">active_record_class</span>, <span class="ruby-value">type_class:</span>, <span class="ruby-value">scope_class:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-operator">**</span><span class="ruby-identifier">kwargs</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-identifier">is_collection</span> = <span class="ruby-identifier">active_record_class</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Array</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_collection</span>
     <span class="ruby-identifier">active_record_class</span> = <span class="ruby-identifier">active_record_class</span>.<span class="ruby-identifier">first</span>
-    <span class="ruby-identifier">resolver</span> = <span class="ruby-identifier">collection</span>(<span class="ruby-identifier">active_record_class</span>, <span class="ruby-identifier">type_class</span>, <span class="ruby-identifier">scope_class</span>)
+    <span class="ruby-identifier">resolver</span> = <span class="ruby-identifier">collection_resolver</span>(<span class="ruby-identifier">active_record_class</span>, <span class="ruby-identifier">type_class</span>, <span class="ruby-identifier">scope_class</span>)
   <span class="ruby-keyword">else</span>
-    <span class="ruby-identifier">resolver</span> = <span class="ruby-identifier">resource</span>(<span class="ruby-identifier">active_record_class</span>, <span class="ruby-identifier">type_class</span>)
+    <span class="ruby-identifier">resolver</span> = <span class="ruby-identifier">resource_resolver</span>(<span class="ruby-identifier">active_record_class</span>, <span class="ruby-identifier">type_class</span>)
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-identifier">field</span>(<span class="ruby-identifier">field_name</span>, <span class="ruby-value">paginate:</span> <span class="ruby-identifier">is_collection</span>, <span class="ruby-value">resolver:</span> <span class="ruby-identifier">resolver</span>, <span class="ruby-operator">**</span><span class="ruby-identifier">kwargs</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -170,6 +184,7 @@
     </section>
   
   </section>
+
 </main>
 
 
