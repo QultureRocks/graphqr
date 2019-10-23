@@ -2,10 +2,34 @@
 
 module GraphQR
   ##
-  # @TODO doc
+  # The `BaseResolvers` module defines methods used by other extensions to define resolver classes.
+  # All resolvers defined by this module's methods inherit from `GraphQR::BaseResolver`.
   module BaseResolvers
     ##
-    # @TODO doc
+    # The method defines and returns a resolver class meant for resolving a paginated ActiveRecordRelation.
+    # The returned class implements authorization, running the `PolicyProvider`'s' `index?` action
+    # and `authorized_records` scope.
+    #
+    # The defined resolver does not implement `#unscoped_collection`. Define it before adding the query to the schema**
+    #
+    # ### Params:
+    #
+    # +type_class+: the `GraphQL::Schema::Object` of the ActiveRecordRelation
+    #
+    # +scope_class+: a `GraphQL::Schema::InputObject` which defines arguments to be used by `ApplyScopes`
+    # #### Example:
+    #   ```
+    #   class ObjectScope < GraphQL::Schema::InputObject
+    #     argument :with_relation_id, ID, required: false
+    #     ...
+    #   end
+    #   ```
+    #
+    # ### Example:
+    #
+    # ```
+    # base_collection_resolver(ObjectType, ObjectScope)
+    # ```
     def base_collection_resolver(type_class, scope_class)
       Class.new(GraphQR::BaseResolver) do
         type type_class.pagination_type, null: false
@@ -25,6 +49,21 @@ module GraphQR
       end
     end
 
+    ##
+    # The method defines and returns a resolver class meant for resolving a single ActiveRecord
+    # The returned class implements authorization, running the `PolicyProvider`'s' `show`
+    #
+    # The defined resolver does not implement `#record`. Define it before adding the query to the schema**
+    #
+    # ### Params:
+    #
+    # +type_class+: the `GraphQL::Schema::Object` of the ActiveRecord
+    #
+    # ### Example:
+    #
+    # ```
+    # base_resource_resolver(ObjectType)
+    # ```
     def base_resource_resolver(type_class)
       Class.new(GraphQR::BaseResolver) do
         type type_class, null: false
