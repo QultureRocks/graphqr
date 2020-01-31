@@ -37,6 +37,7 @@ end
 require 'graphqr/hooks'
 
 require 'graphqr/fields/base_field'
+require 'graphqr/pagination/resolvers/record_page_number_resolver'
 require 'graphqr/pagination/types/pagination_page_info_type'
 require 'graphqr/pagination/pagination_extension'
 

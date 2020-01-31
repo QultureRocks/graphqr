@@ -25,6 +25,7 @@ module GraphQR
         field :next_page, Int, null: true,
                                method: :next,
                                description: 'The previous page number or nil if there is no previous page'
+        field :record_page_number, resolver: GraphQR::Pagination::Resolvers::RecordPageNumberResolver
       end
     end
   end
