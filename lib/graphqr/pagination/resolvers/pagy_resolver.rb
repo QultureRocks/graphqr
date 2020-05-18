@@ -34,8 +34,8 @@ module GraphQR
 
         def page_info
           @pagy.tap do |pagy|
-            pagy.class_eval { attr_accessor :ordered_record_ids }
-            pagy.ordered_record_ids = @records&.all? { |r| r&.respond_to?(:id) } ? @records.map(&:id) : []
+            pagy.class_eval { attr_accessor :ordered_record_ids_proc }
+            pagy.ordered_record_ids_proc = -> { @records&.all? { |r| r&.respond_to?(:id) } ? @records.map(&:id) : [] }
           end
         end
       end
