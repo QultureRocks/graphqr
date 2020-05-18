@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    graphqr (0.0.7)
+    graphqr (0.0.8)
       graphql (>= 1.9.0, < 2)
 
 GEM
