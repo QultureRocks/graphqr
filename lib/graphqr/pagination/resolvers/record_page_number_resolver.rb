@@ -15,7 +15,7 @@ module GraphQR
 
         def resolve(record_id:)
           per_page = object.vars[:items]
-          records_ids = object.ordered_record_ids
+          records_ids = object.ordered_record_ids_proc.call
           record_index = records_ids.find_index(record_id.to_i)
 
           return if per_page.zero? || records_ids.blank? || record_index.blank?
