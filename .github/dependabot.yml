@@ -1,0 +1,34 @@
+version: 2
+registries:
+  rubygems-server-gems-contribsys-com:
+    type: rubygems-server
+    url: https://gems.contribsys.com
+    username: "${{secrets.RUBYGEMS_SERVER_GEMS_CONTRIBSYS_COM_USERNAME}}"
+    password: "${{secrets.RUBYGEMS_SERVER_GEMS_CONTRIBSYS_COM_PASSWORD}}"
+
+updates:
+- package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "23:00"
+    timezone: America/Sao_Paulo
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: graphql
+    versions:
+    - 1.12.3
+    - 1.12.4
+    - 1.12.5
+    - 1.12.6
+    - 1.12.7
+  - dependency-name: rubocop
+    versions:
+    - 1.10.0
+    - 1.11.0
+    - 1.12.0
+    - 1.12.1
+    - 1.9.0
+    - 1.9.1
+  registries:
+  - rubygems-server-gems-contribsys-com
